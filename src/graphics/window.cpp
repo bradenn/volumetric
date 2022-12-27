@@ -4,6 +4,8 @@
 
 #include "window.h"
 
+#include <GLFW/glfw3.h>
+
 Window::Window(int width, int height, const string &name) {
     // Initialize the GLFW
     if (!glfwInit()) {
@@ -27,11 +29,12 @@ Window::Window(int width, int height, const string &name) {
     // Load the identity matrix to start
     glLoadIdentity();
     // Set an orthographic view mode
-    glOrtho(-(double)width/2.0, (double)width/2.0, (double)height/2.0, -(double)height/2.0, 0, -1000);
+    glOrtho(-(double)width/2.0, (double)width/2.0, (double)height/2.0, -(double)height/2.0, -100, 100);
     // Move into model view
     glMatrixMode(GL_MODELVIEW);
     // Load the identity matrix
     glLoadIdentity();
+
 }
 
 void Window::pollEvents() {

@@ -3,10 +3,11 @@
 //
 
 #include "quanta.h"
-#include <iostream>
+
+using std::string;
 
 Quanta::Quanta(Vector3D position, Vector3D velocity, Vector3D force, double mass, double charge) :
-        position_(position), velocity_(velocity), force_(force), mass_(mass), charge_(charge){
+        position_(position), velocity_(velocity), force_(force), mass_(mass), charge_(charge) {
 
 }
 
@@ -17,6 +18,13 @@ Vector3D Quanta::getPosition() const {
 void Quanta::addForce(Vector3D force) {
     force_ = force_ + force;
 
+}
+
+void Quanta::addNamedForce(const string &name, Vector3D force) {
+    if (!forces.contains(name)) {
+        forces.emplace(name, Vector3D{0, 0, 0});
+    }
+    forces.at(name) = forces.at(name) + force;
 }
 
 void Quanta::update(double dt) {
@@ -30,6 +38,8 @@ void Quanta::update(double dt) {
     position_ = position_ + velocity_ * dt;
 
     resetForce();
+
+    forces.clear();
 }
 
 double Quanta::getMass() const {
@@ -52,6 +62,6 @@ double Quanta::getCharge() const {
     return charge_;
 }
 
-double Quanta::getRadius() {
+double Quanta::getRadius() const {
     return pow((3.0 / 4.0) * (mass_ / (density_ * M_PI)), 1.0 / 3.0);
 }

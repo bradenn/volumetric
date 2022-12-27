@@ -5,8 +5,14 @@
 #include "simulation.h"
 
 Simulation::Simulation(double timeStep) {
-    matter.push_back(new Quanta({(double) 0, (double) 0, 0}, {0, 0, 0}, {0, 0, 0}, 0, 0.0001));
-    matter.push_back(new Quanta({(double) 100, (double) 0, 0}, {0, 0, 0}, {0, 0, 0}, 0, -0.0001));
+    for (int i = 0; i < 5; ++i) {
+        double px = 200.0 - ((double) (random() % 1000) / 1000.0) * 400.0;
+        double py = 200.0 - ((double) (random() % 1000) / 1000.0) * 400.0;
+        matter.push_back(new Quanta({(double) px, (double) py, 0}, {0, 0, 0}, {0, 0, 0}, 100*(std::rand()%100/100.0),
+                                    1e-9 - 2e-9*(std::rand()%100/100.0)));
+
+    }
+
 }
 
 void Simulation::updateWindow() {
@@ -30,8 +36,12 @@ void Simulation::step(double delta) {
     for (auto i: matter) {
         for (auto j: matter) {
             if (!i->operator==(*j)) {
-                i->addForce(electromagnetic_.updateForce(*i, *j));
-                i->addForce(gravity_.updateForce(*i, *j));
+                auto em = electromagnetic_.updateForce(*i, *j);
+                i->addForce(em);
+                i->addNamedForce("em", em);
+                auto gravity = gravity_.updateForce(*i, *j);
+                i->addNamedForce("gravity", gravity);
+                i->addForce(gravity);
             }
         }
     }
