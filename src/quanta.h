@@ -8,9 +8,12 @@
 
 #include "utilities/Vector3D.h"
 #include <string>
+#include <deque>
 #include <map>
+#include <vector>
 
 using std::map;
+using std::deque;
 using std::string;
 
 class Quanta {
@@ -43,11 +46,14 @@ public:
     void addNamedForce(const string &name, Vector3D force);
     map<string, Vector3D> forces{};
 
+    deque<Vector3D> tail;
+
 private:
 
     Vector3D position_;
     Vector3D velocity_;
     Vector3D force_;
+
 
 
     double mass_;

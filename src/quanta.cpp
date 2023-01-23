@@ -39,6 +39,11 @@ void Quanta::update(double dt) {
 
     resetForce();
 
+    tail.push_back(position_);
+    if(tail.size() > 1000) {
+        tail.pop_front();
+    }
+
     forces.clear();
 }
 

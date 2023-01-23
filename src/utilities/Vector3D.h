@@ -12,6 +12,8 @@ class Vector3D {
 public:
     Vector3D(double x, double y, double z) : x_(x), y_(y), z_(z) {}
 
+    Vector3D() {}
+
     double getX() const { return x_; }
 
     double getY() const { return y_; }

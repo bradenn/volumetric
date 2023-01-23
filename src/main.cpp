@@ -19,7 +19,7 @@ int main() {
     while (window.isRunning()) {
 
         simulation.updateWindow();
-        simulation.step(0.5);
+        simulation.step(10);
 
         simulation.updateRenderer();
 

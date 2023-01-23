@@ -10,19 +10,23 @@
 #include <freetype/freetype.h>
 #include "quanta.h"
 #include "fontRenderer.h"
+#include "Camera.h"
 
 using std::vector;
+
+#define MULTIPLE 80
 
 class Renderer {
 
 public:
     Renderer(double width, double height) : width(width), height(height) {
         fr = FontRenderer("./IBMPlexSans-Regular.ttf");
+        unit = width/MULTIPLE;
     };
 
     Renderer() = default;
 
-    void render(const vector<Quanta *> &quanta);
+    void render(Camera *camera);
 
     void renderGrid();
 
@@ -34,8 +38,10 @@ public:
 
 private:
     double width, height;
+    double unit;
 
     FontRenderer fr;
+
 };
 
 
