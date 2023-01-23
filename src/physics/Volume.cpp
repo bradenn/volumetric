@@ -33,11 +33,11 @@ double map_range(double value, double old_min, double old_max, double new_min, d
     return new_min + proportion * (new_max - new_min);
 }
 
-void materialColor(float r, float g, float b) {
+void materialColor(float r, float g, float b, float a) {
 
     GLfloat ambientLight[] = {(GLfloat) r, (GLfloat) g, (GLfloat) b, 0.50f};
-    GLfloat diffuseLight[] = {(GLfloat) r, (GLfloat) g, (GLfloat) b, 1};
-    glColor3f((GLfloat) r, (GLfloat) g, (GLfloat) b);
+    GLfloat diffuseLight[] = {(GLfloat) r, (GLfloat) g, (GLfloat) b, (GLfloat) a};
+    glColor4f((GLfloat) r, (GLfloat) g, (GLfloat) b, (GLfloat) a);
 // Assign created components to GL_LIGHT0.
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientLight);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseLight);
@@ -110,11 +110,11 @@ double rdod_n[12][3] =
     \see      glutSolidRhombicDodecahedron(), glutWireDodecahedron(),
               glutSolidDodecahedron()
 */
-void drawRhombicDodecahedron(double r, double g, double b) {
+void drawRhombicDodecahedron(double r, double g, double b, double a) {
     int i;
     for (i = 0; i < 12; i++) {
-        glBegin(GL_QUADS);
-        materialColor(r, g, b);
+        glBegin(GL_LINES);
+        materialColor(r, g, b, a);
         glNormal3dv(rdod_n[i]);
         glVertex3dv(rdod_r[rdod_v[i][0]]);
         glVertex3dv(rdod_r[rdod_v[i][1]]);
@@ -241,8 +241,9 @@ void Volume::draw() {
             for (int k = 0; k < cellZ; ++k) { //z
                 glPushMatrix();
                 glTranslated(0, 0, k * 2);
-                float n = s->fractal(3, j, k, i) * 0.2;
-                drawRhombicDodecahedron(1 - n, 1 - n, n);
+                float n = s->noise(j, k, i);
+                double color = 0.25;
+                drawRhombicDodecahedron(color, color, color, 1);
                 glPopMatrix();
             }
             glPopMatrix();

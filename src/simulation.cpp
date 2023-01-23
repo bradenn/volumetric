@@ -10,14 +10,19 @@ Simulation::Simulation(double timeStep) {
 }
 
 void Simulation::updateWindow() {
-    glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-
     glEnable(GL_COLOR_MATERIAL);
+    glEnable( GL_BLEND );
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+
     GLfloat ambientLight[] = {0.4f, 0.4f, 0.4f, 1.0f};
     GLfloat diffuseLight[] = {0.5f, 0.5f, 0.5f, 1.0f};
     GLfloat specularLight[] = {0.8f, 0.8f, 0.8f, 1.0f};
